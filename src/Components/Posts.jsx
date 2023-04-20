@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addPost, deletePost } from "../redux/postsSlice";
+import { addPost, deletePost, updatePost } from "../redux/postsSlice";
 
 export default function Posts()
 {
     const [title, setTitle] = useState("")
     const [Description, setDescription] = useState("")
     const [Color, setColor] = useState("")
+
+    const [updatetitle, setUpdateTitle] = useState("")
+    const [UpdateDescription, setUpdateDescription] = useState("")
+    const [UpdateColor, setUpdateColor] = useState("")
+
+    const [edit, setEdit] = useState(false)
+    const [Id, setId] = useState(null)
 
     const Dispatch = useDispatch()
 
@@ -24,6 +31,11 @@ export default function Posts()
     {
         Dispatch(deletePost(id))
     }
+    const HandleEditForm = (id) =>
+    {
+        setEdit(true)
+        setId(id)
+    }
     return (
         <>
             <h1 className="text-center text-primary">Posts</h1>
@@ -35,13 +47,57 @@ export default function Posts()
                             <p className="card-text">{post.Description}</p>
                     </div>
                     <div className="card-header text-center">
-                        <button className="btn btn-info m-1">Edit</button>
+                        <button className="btn btn-info m-1"
+                                onClick={() => HandleEditForm(post.id)}
+                        >Edit
+                        </button>
                         <button 
                             className="btn btn-danger m-1"
                                 onClick={() => HandleDelete({id: post.id}) }
                         >
                             Delete
                         </button>
+                        {edit && Id == post.id && (
+                        <div className="update">
+                            <div className="mb-3">
+                                <label for="Title" className="form-label">Title</label>
+                                <input type="Title"
+                                    className="form-control"
+                                    id="Title" placeholder="Title..."
+                                    onChange={(e) => setUpdateTitle(e.target.value)}
+                                />
+                            </div>
+                                <div className="mb-3">
+                                    <label htmlFor="color" className="form-label">Choose a color</label>
+                                    <select class="form-select"
+                                        aria-label="Default select example"
+                                            onChange={(e) => setUpdateColor(e.target.value)}
+                                    >
+                                        <option value="primary">primary</option>
+                                        <option value="secondary">secondary</option>
+                                        <option value="success">success</option>
+                                        <option value="danger">danger</option>
+                                        <option value="warning">warning</option>
+                                        <option value="info">info</option>
+                                        <option value="dark">dark</option>
+                                    </select>
+                                </div>
+                                <div className="mb-3">
+                                    <label for="description" className="form-label">Description</label>
+                                    <textarea className="form-control"
+                                        id="description"
+                                        rows="3"
+                                            onChange={(e) => setUpdateDescription(e.target.value)}
+                                    ></textarea>
+                                </div>
+                                <button className="btn btn-success"
+                                    onClick={()=>{
+                                        Dispatch(updatePost({ id: post.id, title: updatetitle, Description: UpdateDescription, Color: UpdateColor }))
+                                        setEdit(false)
+                                    }}
+                                >update</button>
+                        </div>
+                            )}
                     </div>
                 </div> ): "there is no posts "}
                 <div className="add">
