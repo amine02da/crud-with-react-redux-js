@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addPost } from "../redux/postsSlice";
+import { addPost, deletePost } from "../redux/postsSlice";
 
 export default function Posts()
 {
@@ -12,12 +12,18 @@ export default function Posts()
 
     const posts = useSelector((state) => state.posts.posts)
 
-    const Handleadd = () => {
+    const Handleadd = () => 
+    {
         Dispatch(addPost({ id: posts.length + 1, title, Description, Color }))
         setTitle("")
         setDescription("")
         setColor("")
     } 
+
+    const HandleDelete = (id) =>
+    {
+        Dispatch(deletePost(id))
+    }
     return (
         <>
             <h1 className="text-center text-primary">Posts</h1>
@@ -26,12 +32,16 @@ export default function Posts()
                     <div className={`card text-bg-${post.Color ? post.Color : "primary"} mb-3`} style={{ maxWidth: "18rem"}}>
                     <div className="card-body">
                             <h5 className="card-title">{post.title}</h5>
-                            <h5 className="card-title">{post.id}</h5>
-                        <p className="card-text">{post.Description}</p>
+                            <p className="card-text">{post.Description}</p>
                     </div>
                     <div className="card-header text-center">
                         <button className="btn btn-info m-1">Edit</button>
-                        <button className="btn btn-danger m-1">Delete</button>
+                        <button 
+                            className="btn btn-danger m-1"
+                                onClick={() => HandleDelete({id: post.id}) }
+                        >
+                            Delete
+                        </button>
                     </div>
                 </div> ): "there is no posts "}
                 <div className="add">

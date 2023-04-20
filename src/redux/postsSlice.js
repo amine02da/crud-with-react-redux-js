@@ -8,12 +8,18 @@ export const postsSlice = createSlice({
     },
 
     reducers:{
-        addPost:(state, action) =>{
+        addPost:(state, action) =>
+        {
             state.posts.push(action.payload)
+        },
+        deletePost:(state, action ) => 
+        {
+            state.posts = state.posts.filter(post => post.id  != action.payload.id)
         }
+
     }
 })
 
-export const  {addPost} = postsSlice.actions
+export const  {addPost, deletePost} = postsSlice.actions
 
 export default postsSlice.reducer
