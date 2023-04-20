@@ -24,13 +24,13 @@ export default function Posts()
                     <div className="mb-3">
                         <label htmlFor="color" className="form-label">Choose a color</label>
                         <select class="form-select" aria-label="Default select example">
-                            <option value="1">primary</option>
-                            <option value="2">secondary</option>
-                            <option value="3">success</option>
-                            <option value="3">danger</option>
-                            <option value="3">warning</option>
-                            <option value="3">info</option>
-                            <option value="3">dark</option>
+                            <option value="primary">primary</option>
+                            <option value="secondary">secondary</option>
+                            <option value="success">success</option>
+                            <option value="danger">danger</option>
+                            <option value="warning">warning</option>
+                            <option value="info">info</option>
+                            <option value="dark">dark</option>
                         </select>
                     </div>
                     <div className="mb-3">
